@@ -1,4 +1,3 @@
-[![GitHub Release][release-img]][release]
 [![Downloads][download]][release]
 [![Docker Pulls][docker-pull]][docker]
 [![Go Report Card][report-card-img]][report-card]
