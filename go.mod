@@ -16,8 +16,8 @@ require (
 	github.com/stretchr/testify v1.8.2
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/postgres v1.5.2
-	gorm.io/gorm v1.25.1
-	k8s.io/client-go v0.28.3
+	gorm.io/gorm v1.25.5
+	k8s.io/client-go v0.28.2
 )
 
 require (
