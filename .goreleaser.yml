@@ -31,9 +31,9 @@ archives:
       - "cfg/config.yaml"
 nfpms:
   -
-    vendor: KhulnaSoft Security
+    vendor: Khulnasoft Security
     description: "The Kubernetes Bench for Security is a Go application that checks whether Kubernetes is deployed according to security best practices"
-    maintainer: Md Sulaiman <devsec@khulnasoft.com>
+    maintainer: Yoav Rotem <yoav.rotem@khulnasoft.com>
     license: Apache-2.0
     homepage: https://github.com/khulnasoft-lab/kube-bench
     file_name_template: '{{ .Binary }}_{{.Version}}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{.Arm }}{{ end }}'
