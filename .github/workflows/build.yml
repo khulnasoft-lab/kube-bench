@@ -16,7 +16,7 @@ on:
 env:
   GO_VERSION: "1.19"
   KIND_VERSION: "v0.11.1"
-  KIND_IMAGE: "kindest/node:v1.21.1
+  KIND_IMAGE: "kindest/node:v1.21.1"
 
 jobs:
   lint:
