@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/khulnasoft-lab/kube-bench/internal/findings"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/securityhub"
 	"github.com/aws/aws-sdk-go-v2/service/securityhub/types"
+	"github.com/khulnasoft-lab/kube-bench/internal/findings"
 	"github.com/spf13/viper"
 )
 
