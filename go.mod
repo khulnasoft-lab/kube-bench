@@ -1,6 +1,8 @@
 module github.com/khulnasoft-lab/kube-bench
 
-go 1.19
+go 1.21
+
+toolchain go1.21.5
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.24.0
@@ -17,7 +19,7 @@ require (
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/postgres v1.5.2
 	gorm.io/gorm v1.25.1
-	k8s.io/client-go v0.28.2
+	k8s.io/client-go v0.29.0
 )
 
 require (
