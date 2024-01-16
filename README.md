@@ -1,3 +1,4 @@
+[![GitHub Release][release-img]][release]
 [![Downloads][download]][release]
 [![Docker Pulls][docker-pull]][docker]
 [![Go Report Card][report-card-img]][report-card]
@@ -15,10 +16,20 @@
 [report-card-img]: https://goreportcard.com/badge/github.com/khulnasoft-lab/kube-bench
 [report-card]: https://goreportcard.com/report/github.com/khulnasoft-lab/kube-bench
 
+<img src="docs/images/kube-bench.png" width="200" alt="kube-bench logo">
 
 kube-bench is a tool that checks whether Kubernetes is deployed securely by running the checks documented in the [CIS Kubernetes Benchmark](https://www.cisecurity.org/benchmark/kubernetes/).
 
-### Quick start
+Tests are configured with YAML files, making this tool easy to update as test specifications evolve.
+
+![Kubernetes Bench for Security](/docs/images/output.png "Kubernetes Bench for Security")
+
+## CIS Scanning as part of Trivy and the Trivy Operator
+
+[Trivy](https://github.com/khulnasoft-lab/trivy), the all in one cloud native security scanner, can be deployed as a [Kubernetes Operator](https://github.com/khulnasoft-lab/trivy-operator) inside a cluster.
+Both, the [Trivy CLI](https://github.com/khulnasoft-lab/trivy), and the [Trivy Operator](https://github.com/khulnasoft-lab/trivy-operator) support CIS Kubernetes Benchmark scanning among several other features.
+
+## Quick start
 
 There are multiple ways to run kube-bench.
 You can run kube-bench inside a pod, but it will need access to the host's PID namespace in order to check the running processes, as well as access to some directories on the host where config files and other files are stored.

@@ -16,20 +16,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: true
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v4
         with:
           python-version: 3.x
       - run: |
-          pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material.git
+          pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
           pip install mike
           pip install mkdocs-macros-plugin
         env:
           # Note: It is not the same as ${{ secrets.GITHUB_TOKEN }} !
-          GH_TOKEN: ${{ secrets.MKDOCS_KHULNASOFT_BOT }}
+          GH_TOKEN: ${{ secrets.MKDOCS_AQUA_BOT }}
       - run: |
           git config user.name "khulnasoft-bot"
           git config user.email "khulnasoft-bot@users.noreply.github.com"
