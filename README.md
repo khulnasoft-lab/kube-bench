@@ -24,10 +24,10 @@ Tests are configured with YAML files, making this tool easy to update as test sp
 
 ![Kubernetes Bench for Security](/docs/images/output.png "Kubernetes Bench for Security")
 
-## CIS Scanning as part of Trivy and the Trivy Operator
+## CIS Scanning as part of Tunnel and the Tunnel Operator
 
-[Trivy](https://github.com/khulnasoft-lab/trivy), the all in one cloud native security scanner, can be deployed as a [Kubernetes Operator](https://github.com/khulnasoft-lab/trivy-operator) inside a cluster.
-Both, the [Trivy CLI](https://github.com/khulnasoft-lab/trivy), and the [Trivy Operator](https://github.com/khulnasoft-lab/trivy-operator) support CIS Kubernetes Benchmark scanning among several other features.
+[Tunnel](https://github.com/khulnasoft/tunnel), the all in one cloud native security scanner, can be deployed as a [Kubernetes Operator](https://github.com/khulnasoft/tunnel-operator) inside a cluster.
+Both, the [Tunnel CLI](https://github.com/khulnasoft/tunnel), and the [Tunnel Operator](https://github.com/khulnasoft/tunnel-operator) support CIS Kubernetes Benchmark scanning among several other features.
 
 ## Quick start
 
