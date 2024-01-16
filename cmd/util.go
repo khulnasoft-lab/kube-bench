@@ -11,9 +11,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/khulnasoft-lab/kube-bench/check"
 	"github.com/fatih/color"
 	"github.com/golang/glog"
+	"github.com/khulnasoft-lab/kube-bench/check"
 	"github.com/spf13/viper"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
