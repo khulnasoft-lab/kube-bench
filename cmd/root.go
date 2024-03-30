@@ -1,4 +1,4 @@
-// Copyright © 2017 Khulnasoft Security Software Ltd. <info@khulnasoft.com>
+// Copyright © 2017 Aqua Security Software Ltd. <info@aquasec.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@ import (
 	"os"
 
 	"github.com/golang/glog"
-	"github.com/khulnasoft-lab/kube-bench/check"
+	"github.com/khulnasoft/kube-bench/check"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

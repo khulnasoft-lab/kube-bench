@@ -2,19 +2,19 @@
 [![Downloads][download]][release]
 [![Docker Pulls][docker-pull]][docker]
 [![Go Report Card][report-card-img]][report-card]
-[![Build Status](https://github.com/khulnasoft-lab/kube-bench/workflows/Build/badge.svg?branch=main)](https://github.com/khulnasoft-lab/kube-bench/actions)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/khulnasoft-lab/kube-bench/blob/main/LICENSE)
+[![Build Status](https://github.com/khulnasoft/kube-bench/workflows/Build/badge.svg?branch=main)](https://github.com/khulnasoft/kube-bench/actions)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/khulnasoft/kube-bench/blob/main/LICENSE)
 [![Coverage Status][cov-img]][cov]
 
-[download]: https://img.shields.io/github/downloads/khulnasoft-lab/kube-bench/total?logo=github
-[release-img]: https://img.shields.io/github/release/khulnasoft-lab/kube-bench.svg?logo=github
-[release]: https://github.com/khulnasoft-lab/kube-bench/releases
+[download]: https://img.shields.io/github/downloads/khulnasoft/kube-bench/total?logo=github
+[release-img]: https://img.shields.io/github/release/khulnasoft/kube-bench.svg?logo=github
+[release]: https://github.com/khulnasoft/kube-bench/releases
 [docker-pull]: https://img.shields.io/docker/pulls/khulnasoft/kube-bench?logo=docker&label=docker%20pulls%20%2F%20kube-bench
 [docker]: https://hub.docker.com/r/khulnasoft/kube-bench
-[cov-img]: https://codecov.io/github/khulnasoft-lab/kube-bench/branch/main/graph/badge.svg
-[cov]: https://codecov.io/github/khulnasoft-lab/kube-bench
-[report-card-img]: https://goreportcard.com/badge/github.com/khulnasoft-lab/kube-bench
-[report-card]: https://goreportcard.com/report/github.com/khulnasoft-lab/kube-bench
+[cov-img]: https://codecov.io/github/khulnasoft/kube-bench/branch/main/graph/badge.svg
+[cov]: https://codecov.io/github/khulnasoft/kube-bench
+[report-card-img]: https://goreportcard.com/badge/github.com/khulnasoft/kube-bench
+[report-card]: https://goreportcard.com/report/github.com/khulnasoft/kube-bench
 
 <img src="docs/images/kube-bench.png" width="200" alt="kube-bench logo">
 
@@ -24,10 +24,10 @@ Tests are configured with YAML files, making this tool easy to update as test sp
 
 ![Kubernetes Bench for Security](/docs/images/output.png "Kubernetes Bench for Security")
 
-## CIS Scanning as part of Tunnel and the Tunnel Operator
+## CIS Scanning as part of Trivy and the Trivy Operator
 
-[Tunnel](https://github.com/khulnasoft/tunnel), the all in one cloud native security scanner, can be deployed as a [Kubernetes Operator](https://github.com/khulnasoft/tunnel-operator) inside a cluster.
-Both, the [Tunnel CLI](https://github.com/khulnasoft/tunnel), and the [Tunnel Operator](https://github.com/khulnasoft/tunnel-operator) support CIS Kubernetes Benchmark scanning among several other features.
+[Trivy](https://github.com/khulnasoft/trivy), the all in one cloud native security scanner, can be deployed as a [Kubernetes Operator](https://github.com/khulnasoft/trivy-operator) inside a cluster.
+Both, the [Trivy CLI](https://github.com/khulnasoft/trivy), and the [Trivy Operator](https://github.com/khulnasoft/trivy-operator) support CIS Kubernetes Benchmark scanning among several other features.
 
 ## Quick start
 

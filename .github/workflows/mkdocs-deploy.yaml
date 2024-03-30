@@ -1,6 +1,6 @@
 ---
 # This is a manually triggered workflow to build and publish the MkDocs from the
-# main branch to GitHub pages at https://khulnasoft-lab.github.io/kube-bench.
+# main branch to GitHub pages at https://khulnasoft.github.io/kube-bench.
 name: Deploy documentation
 
 on:
@@ -24,7 +24,7 @@ jobs:
         with:
           python-version: 3.x
       - run: |
-          pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material.git
+          pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
           pip install mike
           pip install mkdocs-macros-plugin
         env:

@@ -641,7 +641,7 @@ groups:
                 - AdvancedAuditing=true
         scored: true
 
-      # Review 1.1.37 in Khulnasoftsec shared doc, the tests are net zero.
+      # Review 1.1.37 in Khulnasoft shared doc, the tests are net zero.
       - id: 1.37
         text: "Adjust the request timeout argument for your cluster resources"
         audit: "grep request-timeout /etc/origin/master/master-config.yaml"

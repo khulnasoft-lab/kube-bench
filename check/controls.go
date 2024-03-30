@@ -1,4 +1,4 @@
-// Copyright © 2017 Khulnasoft Security Software Ltd. <info@khulnasoft.com>
+// Copyright © 2017 Aqua Security Software Ltd. <info@aquasec.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ const (
 	// UNKNOWN is when the AWS account can't be found
 	UNKNOWN = "Unknown"
 	// ARN for the AWS Security Hub service
-	ARN = "arn:aws:securityhub:%s::product/khulnasoft-security/kube-bench"
+	ARN = "arn:aws:securityhub:%s::product/aqua-security/kube-bench"
 	// SCHEMA for the AWS Security Hub service
 	SCHEMA = "2018-10-08"
 	// TYPE is type of Security Hub finding
@@ -237,7 +237,7 @@ func (controls *Controls) ASFF() ([]types.AwsSecurityFinding, error) {
 					actualValue = check.ActualValue[0:1023]
 				}
 
-				// Fix issue https://github.com/khulnasoft-lab/kube-bench/issues/903
+				// Fix issue https://github.com/khulnasoft/kube-bench/issues/903
 				if len(check.Remediation) > 512 {
 					remediation = check.Remediation[0:511]
 				}

@@ -9,7 +9,7 @@ GOOS ?= linux
 BUILD_OS := linux
 uname := $(shell uname -s)
 BUILDX_PLATFORM ?= linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x
-DOCKER_ORGS ?= khulnasoft
+DOCKER_ORGS ?= khulnasoft public.ecr.aws/khulnasoft
 GOARCH ?= $@
 
 ifneq ($(findstring Microsoft,$(shell uname -r)),)
@@ -37,10 +37,10 @@ docker:
 build: $(BINARY)
 
 $(BINARY): $(SOURCES)
-	GOOS=$(GOOS) CGO_ENABLED=0 go build -ldflags "-X github.com/khulnasoft-lab/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
+	GOOS=$(GOOS) CGO_ENABLED=0 go build -ldflags "-X github.com/khulnasoft/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
 
 build-fips:
-	GOOS=$(GOOS) CGO_ENABLED=0 GOEXPERIMENT=boringcrypto go build -tags fipsonly -ldflags "-X github.com/khulnasoft-lab/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
+	GOOS=$(GOOS) CGO_ENABLED=0 GOEXPERIMENT=boringcrypto go build -tags fipsonly -ldflags "-X github.com/khulnasoft/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
 
 # builds the current dev docker version
 build-docker:

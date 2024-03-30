@@ -13,7 +13,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/golang/glog"
-	"github.com/khulnasoft-lab/kube-bench/check"
+	"github.com/khulnasoft/kube-bench/check"
 	"github.com/spf13/viper"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -81,7 +81,7 @@ func cleanIDs(list string) map[string]bool {
 // ps execs out to the ps command; it's separated into a function so we can write tests
 func ps(proc string) string {
 	// TODO: truncate proc to 15 chars
-	// See https://github.com/khulnasoft-lab/kube-bench/issues/328#issuecomment-506813344
+	// See https://github.com/khulnasoft/kube-bench/issues/328#issuecomment-506813344
 	glog.V(2).Info(fmt.Sprintf("ps - proc: %q", proc))
 	cmd := exec.Command("/bin/ps", "-C", proc, "-o", "cmd", "--no-headers")
 	out, err := cmd.Output()
