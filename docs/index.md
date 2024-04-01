@@ -1,20 +1,20 @@
-[download]: https://img.shields.io/github/downloads/khulnasoft-lab/kube-bench/total?logo=github
-[release-img]: https://img.shields.io/github/release/khulnasoft-lab/kube-bench.svg?logo=github
-[release]: https://github.com/khulnasoft-lab/kube-bench/releases
+[download]: https://img.shields.io/github/downloads/khulnasoft/kube-bench/total?logo=github
+[release-img]: https://img.shields.io/github/release/khulnasoft/kube-bench.svg?logo=github
+[release]: https://github.com/khulnasoft/kube-bench/releases
 [docker-pull]: https://img.shields.io/docker/pulls/khulnasoft/kube-bench?logo=docker&label=docker%20pulls%20%2F%20kube-bench
 [docker]: https://hub.docker.com/r/khulnasoft/kube-bench
-[cov-img]: https://codecov.io/github/khulnasoft-lab/kube-bench/branch/main/graph/badge.svg
-[cov]: https://codecov.io/github/khulnasoft-lab/kube-bench
-[report-card-img]: https://goreportcard.com/badge/github.com/khulnasoft-lab/kube-bench
-[report-card]: https://goreportcard.com/report/github.com/khulnasoft-lab/kube-bench
+[cov-img]: https://codecov.io/github/khulnasoft/kube-bench/branch/main/graph/badge.svg
+[cov]: https://codecov.io/github/khulnasoft/kube-bench
+[report-card-img]: https://goreportcard.com/badge/github.com/khulnasoft/kube-bench
+[report-card]: https://goreportcard.com/report/github.com/khulnasoft/kube-bench
 
 ![Kube-bench Logo](images/kube-bench.jpg)
 [![GitHub Release][release-img]][release]
 [![Downloads][download]][release]
 [![Docker Pulls][docker-pull]][docker]
 [![Go Report Card][report-card-img]][report-card]
-[![Build Status](https://github.com/khulnasoft-lab/kube-bench/workflows/Build/badge.svg?branch=main)](https://github.com/khulnasoft-lab/kube-bench/actions)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/khulnasoft-lab/kube-bench/blob/main/LICENSE)
+[![Build Status](https://github.com/khulnasoft/kube-bench/workflows/Build/badge.svg?branch=main)](https://github.com/khulnasoft/kube-bench/actions)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/khulnasoft/kube-bench/blob/main/LICENSE)
 [![Coverage Status][cov-img]][cov]
 
 
@@ -31,4 +31,4 @@ Tests are configured with YAML files, making this tool easy to update as test sp
 
 1. It is impossible to inspect the master nodes of managed clusters, e.g. GKE, EKS, AKS and ACK, using kube-bench as one does not have access to such nodes, although it is still possible to use kube-bench to check worker node configuration in these environments.
 
-For help and more information go to our [github discussions q&a](https://github.com/khulnasoft-lab/kube-bench/discussions/categories/q-a)
+For help and more information go to our [github discussions q&a](https://github.com/khulnasoft/kube-bench/discussions/categories/q-a)

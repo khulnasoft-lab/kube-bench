@@ -37,10 +37,10 @@ docker:
 build: $(BINARY)
 
 $(BINARY): $(SOURCES)
-	GOOS=$(GOOS) CGO_ENABLED=0 go build -ldflags "-X github.com/khulnasoft-lab/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
+	GOOS=$(GOOS) CGO_ENABLED=0 go build -ldflags "-X github.com/khulnasoft/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
 
 build-fips:
-	GOOS=$(GOOS) CGO_ENABLED=0 GOEXPERIMENT=boringcrypto go build -tags fipsonly -ldflags "-X github.com/khulnasoft-lab/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
+	GOOS=$(GOOS) CGO_ENABLED=0 GOEXPERIMENT=boringcrypto go build -tags fipsonly -ldflags "-X github.com/khulnasoft/kube-bench/cmd.KubeBenchVersion=$(KUBEBENCH_VERSION)" -o $(BINARY) .
 
 # builds the current dev docker version
 build-docker:

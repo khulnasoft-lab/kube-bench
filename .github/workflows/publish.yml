@@ -6,7 +6,7 @@ on:
     tags:
       - "v*"
 env:
-  ALIAS: khulnasoft-lab
+  ALIAS: khulnasoft
   DOCKERHUB_ALIAS: khulnasoft
   REP: kube-bench
 jobs:
@@ -31,9 +31,9 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKERHUB_USER }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+          
       - name: Get version
         id: get_version
         uses: crazy-max/ghaction-docker-meta@v5
@@ -54,9 +54,7 @@ jobs:
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:latest
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache/release
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache/release
 
@@ -73,7 +71,6 @@ jobs:
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi
           cache-from: type=local,src=/tmp/.buildx-cache/release
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache/release
       - name: Image digest
@@ -92,7 +89,6 @@ jobs:
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi-fips
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi-fips
           cache-from: type=local,src=/tmp/.buildx-cache/release
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache/release
       - name: Image digest

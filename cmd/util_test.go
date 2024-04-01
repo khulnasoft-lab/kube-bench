@@ -25,7 +25,7 @@ import (
 
 	"github.com/magiconair/properties/assert"
 
-	"github.com/khulnasoft-lab/kube-bench/check"
+	"github.com/khulnasoft/kube-bench/check"
 	"github.com/spf13/viper"
 )
 

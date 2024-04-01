@@ -237,7 +237,7 @@ func (controls *Controls) ASFF() ([]types.AwsSecurityFinding, error) {
 					actualValue = check.ActualValue[0:1023]
 				}
 
-				// Fix issue https://github.com/khulnasoft-lab/kube-bench/issues/903
+				// Fix issue https://github.com/khulnasoft/kube-bench/issues/903
 				if len(check.Remediation) > 512 {
 					remediation = check.Remediation[0:511]
 				}
