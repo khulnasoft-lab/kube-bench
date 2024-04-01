@@ -54,9 +54,7 @@ jobs:
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:latest
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache/release
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache/release
 
@@ -73,7 +71,6 @@ jobs:
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi
           cache-from: type=local,src=/tmp/.buildx-cache/release
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache/release
       - name: Image digest
@@ -92,7 +89,6 @@ jobs:
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi-fips
-            public.ecr.aws/${{ env.ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi-fips
           cache-from: type=local,src=/tmp/.buildx-cache/release
           cache-to: type=local,mode=max,dest=/tmp/.buildx-cache/release
       - name: Image digest
