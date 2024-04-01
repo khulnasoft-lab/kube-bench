@@ -9,7 +9,7 @@ GOOS ?= linux
 BUILD_OS := linux
 uname := $(shell uname -s)
 BUILDX_PLATFORM ?= linux/amd64,linux/arm64,linux/arm,linux/ppc64le,linux/s390x
-DOCKER_ORGS ?= khulnasoft public.ecr.aws/khulnasoft
+DOCKER_ORGS ?= khulnasoft
 GOARCH ?= $@
 
 ifneq ($(findstring Microsoft,$(shell uname -r)),)
