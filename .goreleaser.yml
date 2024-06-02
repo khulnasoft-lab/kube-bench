@@ -2,10 +2,15 @@
 project_name: kube-bench
 env:
   - GO111MODULE=on
+  - CGO_ENABLED=0
   - KUBEBENCH_CFG=/etc/kube-bench/cfg
 builds:
   - main: main.go
     binary: kube-bench
+    tags:
+      - osusergo
+      - netgo
+      - static_build
     goos:
       - linux
       - darwin
@@ -19,6 +24,9 @@ builds:
       - 6
       - 7
     ldflags:
+      - "-s"
+      - "-w"
+      - "-extldflags '-static'"
       - "-X github.com/khulnasoft/kube-bench/cmd.KubeBenchVersion={{.Version}}"
       - "-X github.com/khulnasoft/kube-bench/cmd.cfgDir={{.Env.KUBEBENCH_CFG}}"
 # Archive customization
@@ -33,7 +41,7 @@ nfpms:
   -
     vendor: Khulnasoft Security
     description: "The Kubernetes Bench for Security is a Go application that checks whether Kubernetes is deployed according to security best practices"
-    maintainer: Yoav Rotem <yoav.rotem@khulnasoft.com>
+    maintainer: KhulnaSoft DevOps <security@khulnasoft.com>
     license: Apache-2.0
     homepage: https://github.com/khulnasoft/kube-bench
     file_name_template: '{{ .Binary }}_{{.Version}}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{.Arm }}{{ end }}'
