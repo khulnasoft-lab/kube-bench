@@ -1,4 +1,4 @@
-## kue-bench - CIS Kubernetes Benchmark
+## CIS Kubernetes Benchmark
 [![GitHub Release][release-img]][release]
 [![Downloads][download]][release]
 [![Docker Pulls][docker-pull]][docker]
