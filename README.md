@@ -16,8 +16,6 @@
 [report-card-img]: https://goreportcard.com/badge/github.com/khulnasoft-lab/kube-bench
 [report-card]: https://goreportcard.com/report/github.com/khulnasoft-lab/kube-bench
 
-<img src="docs/images/kube-bench.png" width="200" alt="kube-bench logo">
-
 kube-bench is a tool that checks whether Kubernetes is deployed securely by running the checks documented in the [CIS Kubernetes Benchmark](https://www.cisecurity.org/benchmark/kubernetes/).
 
 Tests are configured with YAML files, making this tool easy to update as test specifications evolve.
