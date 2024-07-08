@@ -2,7 +2,7 @@ module github.com/khulnasoft/kube-bench
 
 go 1.22.0
 
-toolchain go1.22.3
+toolchain go1.22.5
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.30.1
