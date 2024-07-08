@@ -1,7 +1,6 @@
 ---
 name: Build
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
@@ -30,8 +29,10 @@ jobs:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: yaml-lint
+        uses: ibiqlik/action-yamllint@v3
       - name: Setup golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v4
         with:
           version: v1.57.2
           args: --verbose
@@ -94,7 +95,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Dry-run release snapshot
-        uses: goreleaser/goreleaser-action@v5
+        uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
           version: v1.7.0

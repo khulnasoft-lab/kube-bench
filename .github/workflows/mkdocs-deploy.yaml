@@ -24,12 +24,12 @@ jobs:
         with:
           python-version: 3.x
       - run: |
-          pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material.git
+          pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
           pip install mike
           pip install mkdocs-macros-plugin
         env:
           # Note: It is not the same as ${{ secrets.GITHUB_TOKEN }} !
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.ORG_REPO_TOKEN }}
       - run: |
           git config user.name "khulnasoft-bot"
           git config user.email "khulnasoft-bot@users.noreply.github.com"
