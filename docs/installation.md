@@ -3,7 +3,7 @@
 You can choose to
 * Run kube-bench from inside a container (sharing PID namespace with the host). See [Running inside a container](./running.md#running-inside-a-container) for additional details.
 * Run a container that installs kube-bench on the host, and then run kube-bench directly on the host. See [Installing from a container](#installing-from-a-container) for additional details.
-* install the latest binaries from the [Releases page](https://github.com/khulnasoft/kube-bench/releases), though please note that you also need to download the config and test files from the `cfg` directory. See [Download and Install binaries](#download-and-install-binaries) for details.
+* install the latest binaries from the [Releases page](https://github.com/khulnasoft-lab/kube-bench/releases), though please note that you also need to download the config and test files from the `cfg` directory. See [Download and Install binaries](#download-and-install-binaries) for details.
 * Compile it from source. See [Installing from sources](#installing-from-sources) for details.
 
 
@@ -13,12 +13,12 @@ It is possible to manually install and run kube-bench release binaries. In order
 
 First, log into one of the nodes using SSH.
 
-Install kube-bench binary for your platform using the commands below. Note that there may be newer releases available. See [releases page](https://github.com/khulnasoft/kube-bench/releases).
+Install kube-bench binary for your platform using the commands below. Note that there may be newer releases available. See [releases page](https://github.com/khulnasoft-lab/kube-bench/releases).
 
 Ubuntu/Debian:
 
 ```
-curl -L https://github.com/khulnasoft/kube-bench/releases/download/v0.6.2/kube-bench_0.6.2_linux_amd64.deb -o kube-bench_0.6.2_linux_amd64.deb
+curl -L https://github.com/khulnasoft-lab/kube-bench/releases/download/v0.6.2/kube-bench_0.6.2_linux_amd64.deb -o kube-bench_0.6.2_linux_amd64.deb
 
 sudo apt install ./kube-bench_0.6.2_linux_amd64.deb -f
 ```
@@ -26,7 +26,7 @@ sudo apt install ./kube-bench_0.6.2_linux_amd64.deb -f
 RHEL:
 
 ```
-curl -L https://github.com/khulnasoft/kube-bench/releases/download/v0.6.2/kube-bench_0.6.2_linux_amd64.rpm -o kube-bench_0.6.2_linux_amd64.rpm
+curl -L https://github.com/khulnasoft-lab/kube-bench/releases/download/v0.6.2/kube-bench_0.6.2_linux_amd64.rpm -o kube-bench_0.6.2_linux_amd64.rpm
 
 sudo yum install kube-bench_0.6.2_linux_amd64.rpm -y
 ```
@@ -34,7 +34,7 @@ sudo yum install kube-bench_0.6.2_linux_amd64.rpm -y
 Alternatively, you can manually download and extract the kube-bench binary:
 
 ```
-curl -L https://github.com/khulnasoft/kube-bench/releases/download/v0.6.2/kube-bench_0.6.2_linux_amd64.tar.gz -o kube-bench_0.6.2_linux_amd64.tar.gz
+curl -L https://github.com/khulnasoft-lab/kube-bench/releases/download/v0.6.2/kube-bench_0.6.2_linux_amd64.tar.gz -o kube-bench_0.6.2_linux_amd64.tar.gz
 
 tar -xvf kube-bench_0.6.2_linux_amd64.tar.gz
 ```
@@ -57,16 +57,16 @@ If Go is installed on the target machines, you can simply clone this repository 
 
 ```shell
 # Create a target directory for the clone, inside the $GOPATH
-mkdir -p $GOPATH/src/github.com/khulnasoft/kube-bench
+mkdir -p $GOPATH/src/github.com/khulnasoft-lab/kube-bench
 
 # Clone this repository, using SSH
-git clone git@github.com:khulnasoft/kube-bench.git $GOPATH/src/github.com/khulnasoft/kube-bench
+git clone git@github.com:khulnasoft/kube-bench.git $GOPATH/src/github.com/khulnasoft-lab/kube-bench
 
 # Install the pre-requisites
-go get github.com/khulnasoft/kube-bench
+go get github.com/khulnasoft-lab/kube-bench
 
 # Change to the kube-bench directory
-cd $GOPATH/src/github.com/khulnasoft/kube-bench
+cd $GOPATH/src/github.com/khulnasoft-lab/kube-bench
 
 # Build the kube-bench binary
 go build -o kube-bench .

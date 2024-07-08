@@ -89,7 +89,7 @@ aws ecr create-repository --repository-name k8s/kube-bench --image-tag-mutabilit
 ```
 3. Download, build and push the kube-bench container image to your ECR repo
 ```
-git clone https://github.com/khulnasoft/kube-bench.git
+git clone https://github.com/khulnasoft-lab/kube-bench.git
 cd kube-bench
 aws ecr get-login-password --region <AWS_REGION> | docker login --username AWS --password-stdin <AWS_ACCT_NUMBER>.dkr.ecr.<AWS_REGION>.amazonaws.com
 docker build -t k8s/kube-bench .
@@ -115,7 +115,7 @@ aws ecr create-repository --repository-name k8s/kube-bench --image-tag-mutabilit
 ```
 3. Download, build and push the kube-bench container image to your ECR repo
 ```
-git clone https://github.com/khulnasoft/kube-bench.git
+git clone https://github.com/khulnasoft-lab/kube-bench.git
 cd kube-bench
 aws ecr get-login-password --region <AWS_REGION> | docker login --username AWS --password-stdin <AWS_ACCT_NUMBER>.dkr.ecr.<AWS_REGION>.amazonaws.com
 docker build -t k8s/kube-bench .
