@@ -1,7 +1,7 @@
 ---
 # This is a manually triggered workflow to build and publish the MkDocs from the
 # main branch to GitHub pages at https://khulnasoft.github.io/kube-bench.
-name: Deploy documentation
+name: 🎉 Deploy documentation
 
 on:
   workflow_dispatch:
