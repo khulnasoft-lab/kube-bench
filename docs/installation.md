@@ -60,7 +60,7 @@ If Go is installed on the target machines, you can simply clone this repository 
 mkdir -p $GOPATH/src/github.com/khulnasoft-lab/kube-bench
 
 # Clone this repository, using SSH
-git clone git@github.com:khulnasoft/kube-bench.git $GOPATH/src/github.com/khulnasoft-lab/kube-bench
+git clone git@github.com:khulnasoft-lab/kube-bench.git $GOPATH/src/github.com/khulnasoft-lab/kube-bench
 
 # Install the pre-requisites
 go get github.com/khulnasoft-lab/kube-bench

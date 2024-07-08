@@ -9,6 +9,7 @@ env:
   ALIAS: khulnasoft
   DOCKERHUB_ALIAS: khulnasoft
   REP: kube-bench
+
 jobs:
   publish:
     name: Publish
@@ -31,9 +32,8 @@ jobs:
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-          
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Get version
         id: get_version
         uses: crazy-max/ghaction-docker-meta@v5
@@ -41,7 +41,10 @@ jobs:
           images: ${{ env.REP }}
           tag-semver: |
             {{version}}
-
+      - name: Extract variables from makefile (kubectl)
+        id: extract_vars
+        run: |
+          echo "KUBECTL_VERSION=$(grep -oP '^KUBECTL_VERSION\s*\?=\s*\K.*' makefile)" >> $GITHUB_ENV
       - name: Build and push - Docker/ECR
         id: docker_build
         uses: docker/build-push-action@v5
@@ -52,6 +55,7 @@ jobs:
           push: true
           build-args: |
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
+            KUBECTL_VERSION=${{ env.KUBECTL_VERSION }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:latest
@@ -69,6 +73,7 @@ jobs:
           file: Dockerfile.ubi
           build-args: |
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
+            KUBECTL_VERSION=${{ env.KUBECTL_VERSION }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi
           cache-from: type=local,src=/tmp/.buildx-cache/release
@@ -87,6 +92,7 @@ jobs:
           file: Dockerfile.fips.ubi
           build-args: |
             KUBEBENCH_VERSION=${{ steps.get_version.outputs.version }}
+            KUBECTL_VERSION=${{ env.KUBECTL_VERSION }}
           tags: |
             ${{ env.DOCKERHUB_ALIAS }}/${{ env.REP }}:${{ steps.get_version.outputs.version }}-ubi-fips
           cache-from: type=local,src=/tmp/.buildx-cache/release
