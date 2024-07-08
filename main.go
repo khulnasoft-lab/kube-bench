@@ -15,7 +15,7 @@
 package main
 
 import (
-	"github.com/khulnasoft/kube-bench/cmd"
+	"github.com/khulnasoft-lab/kube-bench/cmd"
 )
 
 func main() {

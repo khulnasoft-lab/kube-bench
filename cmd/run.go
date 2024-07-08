@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/golang/glog"
-	"github.com/khulnasoft/kube-bench/check"
+	"github.com/khulnasoft-lab/kube-bench/check"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

@@ -27,8 +27,8 @@ builds:
       - "-s"
       - "-w"
       - "-extldflags '-static'"
-      - "-X github.com/khulnasoft/kube-bench/cmd.KubeBenchVersion={{.Version}}"
-      - "-X github.com/khulnasoft/kube-bench/cmd.cfgDir={{.Env.KUBEBENCH_CFG}}"
+      - "-X github.com/khulnasoft-lab/kube-bench/cmd.KubeBenchVersion={{.Version}}"
+      - "-X github.com/khulnasoft-lab/kube-bench/cmd.cfgDir={{.Env.KUBEBENCH_CFG}}"
 # Archive customization
 archives:
   - id: default
@@ -43,7 +43,7 @@ nfpms:
     description: "The Kubernetes Bench for Security is a Go application that checks whether Kubernetes is deployed according to security best practices"
     maintainer: KhulnaSoft DevOps <security@khulnasoft.com>
     license: Apache-2.0
-    homepage: https://github.com/khulnasoft/kube-bench
+    homepage: https://github.com/khulnasoft-lab/kube-bench
     file_name_template: '{{ .Binary }}_{{.Version}}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{.Arm }}{{ end }}'
     contents:
       - src: "cfg/**/*"
