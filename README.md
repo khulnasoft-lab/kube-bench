@@ -1,3 +1,4 @@
+## CIS Kubernetes Benchmark
 [![GitHub Release][release-img]][release]
 [![Downloads][download]][release]
 [![Docker Pulls][docker-pull]][docker]
@@ -22,6 +23,11 @@ kube-bench is a tool that checks whether Kubernetes is deployed securely by runn
 Tests are configured with YAML files, making this tool easy to update as test specifications evolve.
 
 ![Kubernetes Bench for Security](/docs/images/output.png "Kubernetes Bench for Security")
+
+## CIS Scanning as part of Tunnel and the Tunnel Operator
+
+[Tunnel](https://github.com/khulnasoft/tunnel), the all in one cloud native security scanner, can be deployed as a [Kubernetes Operator](https://github.com/khulnasoft/khulnasoft-operator) inside a cluster.
+Both, the [Tunnel CLI](https://github.com/khulnasoft/tunnel), and the [Tunnel Operator](https://github.com/khulnasoft/khulnasoft-operator) support CIS Kubernetes Benchmark scanning among several other features.
 
 ## Quick start
 
