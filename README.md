@@ -7,15 +7,16 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/khulnasoft-lab/kube-bench/blob/main/LICENSE)
 [![Coverage Status][cov-img]][cov]
 
-[download]: https://img.shields.io/github/downloads/khulnasoft-lab/kube-bench/total?logo=github
-[release-img]: https://img.shields.io/github/release/khulnasoft-lab/kube-bench.svg?logo=github
+[download]: https://img.shields.io/github/downloads/khulnasoft/kube-bench/total?logo=github
+[release-img]: https://img.shields.io/github/release/khulnasoft/kube-bench.svg?logo=github
 [release]: https://github.com/khulnasoft-lab/kube-bench/releases
 [docker-pull]: https://img.shields.io/docker/pulls/khulnasoft/kube-bench?logo=docker&label=docker%20pulls%20%2F%20kube-bench
 [docker]: https://hub.docker.com/r/khulnasoft/kube-bench
-[cov-img]: https://codecov.io/github/khulnasoft-lab/kube-bench/branch/main/graph/badge.svg
-[cov]: https://codecov.io/github/khulnasoft-lab/kube-bench
+[cov-img]: https://codecov.io/github/khulnasoft/kube-bench/branch/main/graph/badge.svg
+[cov]: https://codecov.io/github/khulnasoft/kube-bench
 [report-card-img]: https://goreportcard.com/badge/github.com/khulnasoft-lab/kube-bench
 [report-card]: https://goreportcard.com/report/github.com/khulnasoft-lab/kube-bench
+
 
 kube-bench is a tool that checks whether Kubernetes is deployed securely by running the checks documented in the [CIS Kubernetes Benchmark](https://www.cisecurity.org/benchmark/kubernetes/).
 
