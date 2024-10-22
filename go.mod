@@ -6,7 +6,7 @@ require (
 	github.com/aws/aws-sdk-go-v2 v1.31.0
 	github.com/aws/aws-sdk-go-v2/config v1.27.37
 	github.com/aws/aws-sdk-go-v2/service/securityhub v1.53.3
-	github.com/fatih/color v1.16.0
+	github.com/fatih/color v1.18.0
 	github.com/golang/glog v1.2.0
 	github.com/magiconair/properties v1.8.7
 	github.com/onsi/ginkgo v1.16.5
@@ -79,7 +79,7 @@ require (
 	golang.org/x/net v0.23.0 // indirect
 	golang.org/x/oauth2 v0.15.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
-	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/term v0.18.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
