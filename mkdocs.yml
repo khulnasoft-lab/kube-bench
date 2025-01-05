@@ -1,6 +1,6 @@
 ---
 site_name: Kube-bench
-site_url: https://khulnasoft.github.io/kube-bench/
+site_url: https://khulnasoft-lab.github.io/kube-bench/
 site_description: Checks whether Kubernetes is deployed according to security best practices as defined in the CIS Kubernetes Benchmark
 docs_dir: docs/
 repo_name: GitHub

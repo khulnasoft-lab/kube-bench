@@ -5,6 +5,7 @@ id: 1
 text: "Securing the OpenShift Master"
 type: "master"
 groups:
+
   - id: 1
     text: "Protecting the API Server"
     checks:
@@ -94,13 +95,13 @@ groups:
             - path: "{.kubernetesMasterConfig.apiServerArguments.insecure-port}"
               set: false
         remediation: |
-          Edit the kubernetes master config file /etc/origin/master/master-config.yaml
-          and remove the insecure-port entry.
+         Edit the kubernetes master config file /etc/origin/master/master-config.yaml
+         and remove the insecure-port entry.
 
-          kubernetesMasterConfig:
-            apiServerArguments:
-              insecure-port:
-              - 0
+         kubernetesMasterConfig:
+           apiServerArguments:
+             insecure-port:
+             - 0
         scored: true
 
       - id: 1.7
@@ -116,14 +117,14 @@ groups:
                 op: noteq
                 value: "0"
         remediation: |
-          Edit the kubernetes master config file /etc/origin/master/master-config.yaml
-          and either remove the secure-port parameter or set it to a different (non-zero)
-          desired port.
+         Edit the kubernetes master config file /etc/origin/master/master-config.yaml
+         and either remove the secure-port parameter or set it to a different (non-zero)
+         desired port.
 
-          kubernetesMasterConfig:
-            apiServerArguments:
-              secure-port:
-              - 8443
+         kubernetesMasterConfig:
+           apiServerArguments:
+             secure-port:
+             - 8443
         scored: true
 
       - id: 1.8
@@ -144,8 +145,8 @@ groups:
                 op: eq
                 value: "true"
         remediation: |
-          Edit the kubernetes master config file /etc/origin/master/master-config.yaml
-          and remove the repair-malformed-updates entry or set repair-malformed-updates=true.
+         Edit the kubernetes master config file /etc/origin/master/master-config.yaml
+         and remove the repair-malformed-updates entry or set repair-malformed-updates=true.
         scored: true
 
       - id: 1.10
@@ -650,6 +651,7 @@ groups:
           change the request-timeout value in the  /etc/origin/master/master-config.yaml
         scored: true
 
+
   - id: 2
     text: "Scheduler"
     checks:
@@ -657,6 +659,7 @@ groups:
         text: "Verify that Scheduler profiling is not exposed to the web"
         type: "skip"
         scored: true
+
 
   - id: 3
     text: "Controller Manager"
@@ -708,6 +711,7 @@ groups:
                  - true
         scored: true
 
+
       - id: 3.4
         text: "Verify that the --service-account-private-key-file argument is set as appropriate"
         audit: |
@@ -727,6 +731,7 @@ groups:
         remediation: |
           Edit the Openshift master config file /etc/origin/master/master-config.yaml and remove service-account-private-key-file
         scored: true
+
 
       - id: 3.5
         text: "Verify that the --root-ca-file argument is set as appropriate"
@@ -770,6 +775,7 @@ groups:
           be sure to use the Ansible playbooks provided with the OpenShift installer to
           automate re-deploying certificates.
         scored: true
+
 
   - id: 4
     text: "Configuration Files"
@@ -1025,6 +1031,7 @@ groups:
           chown root:root /etc/origin/master/openshift-master.kubeconfig
         scored: true
 
+
   - id: 5
     text: "Etcd"
     checks:
@@ -1142,6 +1149,7 @@ groups:
         remediation: |
           Reset to the OpenShift default configuration.
         scored: false
+
 
   - id: 6
     text: "General Security Primitives"
