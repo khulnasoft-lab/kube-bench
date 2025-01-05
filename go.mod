@@ -3,7 +3,7 @@ module github.com/khulnasoft-lab/kube-bench
 go 1.22.0
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.32.6
+	github.com/aws/aws-sdk-go-v2 v1.32.7
 	github.com/aws/aws-sdk-go-v2/config v1.28.6
 	github.com/aws/aws-sdk-go-v2/service/securityhub v1.55.0
 	github.com/fatih/color v1.18.0
