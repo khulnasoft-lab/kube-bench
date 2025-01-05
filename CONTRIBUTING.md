@@ -51,7 +51,7 @@ We also use the GitHub discussions to Q&A.
 
 We welcome pull requests!
 - Every Pull Request should have an associated Issue, unless you are fixing a trivial documentation issue.
-- We will not accept changes to LICENSE, NOTICE or CONTRIBUTING from outside the Khulnasoft Security team. Please raise an Issue if you believe there is a problem with any of these files. 
+- We will not accept changes to LICENSE, NOTICE or CONTRIBUTING from outside the KhulnaSoft Security team. Please raise an Issue if you believe there is a problem with any of these files. 
 - Your PR is more likely to be accepted if it focuses on just one change.
 - Describe what the PR does. There's no convention enforced, but please try to be concise and descriptive. Treat the PR description as a commit message. Titles that start with "fix"/"add"/"improve"/"remove" are good examples.
 - Please add the associated Issue in the PR description.

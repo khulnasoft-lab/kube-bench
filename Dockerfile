@@ -1,4 +1,4 @@
-FROM golang:1.22.7 AS build
+FROM golang:1.23.4 AS build
 WORKDIR /go/src/github.com/khulnasoft-lab/kube-bench/
 COPY makefile makefile
 COPY go.mod go.sum ./
@@ -13,15 +13,18 @@ RUN make build && cp kube-bench /go/bin/kube-bench
 ARG KUBECTL_VERSION TARGETARCH
 RUN wget -O /usr/local/bin/kubectl "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl"
 RUN wget -O kubectl.sha256 "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${TARGETARCH}/kubectl.sha256"
+
 # Verify kubectl sha256sum
 RUN /bin/bash -c 'echo "$(<kubectl.sha256)  /usr/local/bin/kubectl" | sha256sum -c -'
+
 RUN chmod +x /usr/local/bin/kubectl
 
-FROM alpine:3.20.3 AS run
+FROM alpine:3.21.0 AS run
 WORKDIR /opt/kube-bench/
-# add GNU ps for -C, -o cmd, and --no-headers support
+# add GNU ps for -C, -o cmd, --no-headers support and add findutils to get GNU xargs
 # https://github.com/khulnasoft-lab/kube-bench/issues/109
-RUN apk --no-cache add procps
+# https://github.com/khulnasoft-lab/kube-bench/issues/1656
+RUN apk --no-cache add procps findutils
 
 # Upgrading apk-tools to remediate CVE-2021-36159 - https://snyk.io/vuln/SNYK-ALPINE314-APKTOOLS-1533752
 # https://github.com/khulnasoft-lab/kube-bench/issues/943
@@ -37,12 +40,17 @@ RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/s
 RUN apk add gcompat
 RUN apk add jq
 
-ENV PATH=$PATH:/usr/local/mount-from-host/bin
+# Add bash for running helper scripts
+RUN apk add bash
+
+ENV PATH=$PATH:/usr/local/mount-from-host/bin:/go/bin
 
 COPY --from=build /go/bin/kube-bench /usr/local/bin/kube-bench
 COPY --from=build /usr/local/bin/kubectl /usr/local/bin/kubectl
 COPY entrypoint.sh .
 COPY cfg/ cfg/
+COPY helper_scripts/check_files_owner_in_dir.sh /go/bin/
+RUN chmod a+x /go/bin/check_files_owner_in_dir.sh
 ENTRYPOINT ["./entrypoint.sh"]
 CMD ["install"]
 
