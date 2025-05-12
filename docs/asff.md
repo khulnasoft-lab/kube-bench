@@ -29,7 +29,7 @@ Here is an example IAM Policy that you can attach to your EKS node group's IAM R
             "Effect": "Allow",
             "Action": "securityhub:BatchImportFindings",
             "Resource": [
-                "arn:aws:securityhub:us-east-1::product/khulnasoft/kube-bench"
+                "arn:aws:securityhub:us-east-1::product/khulnasoft-security/kube-bench"
             ]
         }
     ]
