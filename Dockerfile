@@ -1,4 +1,4 @@
-FROM golang:1.23.6 AS build
+FROM golang:1.24.2 AS build
 WORKDIR /go/src/github.com/khulnasoft-lab/kube-bench/
 COPY makefile makefile
 COPY go.mod go.sum ./
@@ -19,7 +19,7 @@ RUN /bin/bash -c 'echo "$(<kubectl.sha256)  /usr/local/bin/kubectl" | sha256sum 
 
 RUN chmod +x /usr/local/bin/kubectl
 
-FROM alpine:3.21.2 AS run
+FROM alpine:3.21.3 AS run
 WORKDIR /opt/kube-bench/
 # add GNU ps for -C, -o cmd, --no-headers support and add findutils to get GNU xargs
 # https://github.com/khulnasoft-lab/kube-bench/issues/109
@@ -57,10 +57,17 @@ CMD ["install"]
 # Build-time metadata as defined at http://label-schema.org
 ARG BUILD_DATE
 ARG VCS_REF
+ARG KUBEBENCH_VERSION
+
 LABEL org.label-schema.build-date=$BUILD_DATE \
-    org.label-schema.name="kube-bench" \
-    org.label-schema.description="Run the CIS Kubernetes Benchmark tests" \
-    org.label-schema.url="https://github.com/khulnasoft-lab/kube-bench" \
-    org.label-schema.vcs-ref=$VCS_REF \
-    org.label-schema.vcs-url="https://github.com/khulnasoft-lab/kube-bench" \
-    org.label-schema.schema-version="1.0"
+      org.label-schema.name="kube-bench" \
+      org.label-schema.vendor="KhulnaSoft Security Software Ltd." \
+      org.label-schema.version=$KUBEBENCH_VERSION \
+      org.label-schema.release=$KUBEBENCH_VERSION \
+      org.label-schema.summary="KhulnaSoft security server" \
+      org.label-schema.maintainer="admin@khulnasoft.com" \
+      org.label-schema.description="Run the CIS Kubernetes Benchmark tests" \
+      org.label-schema.url="https://github.com/khulnasoft-lab/kube-bench" \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/khulnasoft-lab/kube-bench" \
+      org.label-schema.schema-version="1.0"

@@ -33,7 +33,7 @@ const (
 	// UNKNOWN is when the AWS account can't be found
 	UNKNOWN = "Unknown"
 	// ARN for the AWS Security Hub service
-	ARN = "arn:aws:securityhub:%s::product/khulnasoft/kube-bench"
+	ARN = "arn:aws:securityhub:%s::product/khulnasoft-security/kube-bench"
 	// SCHEMA for the AWS Security Hub service
 	SCHEMA = "2018-10-08"
 	// TYPE is type of Security Hub finding

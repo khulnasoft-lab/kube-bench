@@ -11,9 +11,9 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/khulnasoft-lab/kube-bench/check"
 	"github.com/fatih/color"
 	"github.com/golang/glog"
-	"github.com/khulnasoft-lab/kube-bench/check"
 	"github.com/spf13/viper"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -489,7 +489,7 @@ func getPlatformBenchmarkVersion(platform Platform) string {
 	glog.V(3).Infof("getPlatformBenchmarkVersion platform: %s", platform)
 	switch platform.Name {
 	case "eks":
-		return "eks-1.2.0"
+		return "eks-1.5.0"
 	case "gke":
 		switch platform.Version {
 		case "1.15", "1.16", "1.17", "1.18", "1.19":
@@ -527,6 +527,8 @@ func getPlatformBenchmarkVersion(platform Platform) string {
 			return "rke-cis-1.24"
 		case "1.25", "1.26", "1.27":
 			return "rke-cis-1.7"
+		default:
+			return "rke-cis-1.7"
 		}
 	case "rke2r":
 		switch platform.Version {
@@ -535,6 +537,8 @@ func getPlatformBenchmarkVersion(platform Platform) string {
 		case "1.24":
 			return "rke2-cis-1.24"
 		case "1.25", "1.26", "1.27":
+			return "rke2-cis-1.7"
+		default:
 			return "rke2-cis-1.7"
 		}
 	}
