@@ -1,4 +1,4 @@
-FROM golang:1.23.6 AS build
+FROM golang:1.24.3 AS build
 WORKDIR /go/src/github.com/khulnasoft-lab/kube-bench/
 COPY makefile makefile
 COPY go.mod go.sum ./
