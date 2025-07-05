@@ -51,7 +51,7 @@ groups:
 
       - id: 3.1.4
         text: "Ensure that the azure.json file ownership is set to root:root (Automated)"
-        audit: '/bin/sh -c ''if test -e $kubeletconf; then stat -c %U:%G $kubeletconf; fi'' '
+        audit: '/bin/sh -c ''if test -e /etc/kubernetes/azure.json; then stat -c %U:%G /etc/kubernetes/azure.json; fi'' '
         tests:
           test_items:
             - flag: root:root
