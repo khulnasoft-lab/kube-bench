@@ -313,11 +313,11 @@ func getKubeVersion() (*KubeVersion, error) {
 				glog.V(3).Infof("Error detecting RKE cluster: %s", err)
 			}
 			isAKS, err = IsAKS(context.Background(), k8sClient)
- 			if err != nil {
- 				glog.V(3).Infof("Error detecting AKS cluster: %s", err)
- 			}
+			if err != nil {
+				glog.V(3).Infof("Error detecting AKS cluster: %s", err)
+			}
 		}
-		
+
 	}
 
 	if k8sVer, err := getKubeVersionFromRESTAPI(); err == nil {
@@ -326,8 +326,8 @@ func getKubeVersion() (*KubeVersion, error) {
 			k8sVer.GitVersion = k8sVer.GitVersion + "-rancher1"
 		}
 		if isAKS {
- 			k8sVer.GitVersion = k8sVer.GitVersion + "-aks1"
- 		}
+			k8sVer.GitVersion = k8sVer.GitVersion + "-aks1"
+		}
 		return k8sVer, nil
 	}
 
@@ -495,27 +495,27 @@ func getPlatformInfoFromVersion(s string) Platform {
 }
 
 func IsAKS(ctx context.Context, k8sClient kubernetes.Interface) (bool, error) {
- 	nodes, err := k8sClient.CoreV1().Nodes().List(ctx, metav1.ListOptions{Limit: 1})
- 	if err != nil {
- 		return false, err
- 	}
+	nodes, err := k8sClient.CoreV1().Nodes().List(ctx, metav1.ListOptions{Limit: 1})
+	if err != nil {
+		return false, err
+	}
 
- 	if len(nodes.Items) == 0 {
- 		return false, nil
- 	}
+	if len(nodes.Items) == 0 {
+		return false, nil
+	}
 
- 	node := nodes.Items[0]
- 	labels := node.Labels
- 	if _, exists := labels["kubernetes.azure.com/cluster"]; exists {
- 		return true, nil
- 	}
+	node := nodes.Items[0]
+	labels := node.Labels
+	if _, exists := labels["kubernetes.azure.com/cluster"]; exists {
+		return true, nil
+	}
 
- 	if strings.HasPrefix(node.Spec.ProviderID, "azure://") {
- 		return true, nil
- 	}
+	if strings.HasPrefix(node.Spec.ProviderID, "azure://") {
+		return true, nil
+	}
 
- 	return false, nil
- }
+	return false, nil
+}
 
 func getPlatformBenchmarkVersion(platform Platform) string {
 	glog.V(3).Infof("getPlatformBenchmarkVersion platform: %s", platform)
