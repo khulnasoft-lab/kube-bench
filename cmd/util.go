@@ -617,7 +617,7 @@ func getOcpValidVersion(ocpVer string) (string, error) {
 	valid := []string{"3.10", "4.1", "4.11", "4.12", "4.13"}
 	for !isEmpty(ocpVer) {
 		glog.V(3).Info(fmt.Sprintf("getOcpBenchmarkVersion check for ocp: %q \n", ocpVer))
-		if ocpVer == "3.10" || ocpVer == "4.1" {
+		if slices.Contains(valid, ocpVer) {
 			glog.V(1).Info(fmt.Sprintf("getOcpBenchmarkVersion found valid version for ocp: %q \n", ocpVer))
 			return ocpVer, nil
 		}
