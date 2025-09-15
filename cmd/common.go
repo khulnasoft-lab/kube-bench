@@ -497,7 +497,7 @@ func getSummaryTotals(controlsCollection []*check.Controls) check.Summary {
 }
 
 func printRawOutput(output string) {
-	for _, row := range strings.Split(output, "\n") {
+	for row := range strings.SplitSeq(output, "\n") {
 		fmt.Println(fmt.Sprintf("\t %s", row))
 	}
 }

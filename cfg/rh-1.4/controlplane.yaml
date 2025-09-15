@@ -57,8 +57,5 @@ groups:
           oc get configmap config -n openshift-apiserver -ojson | jq -r '.data["config.yaml"]' | jq '.auditConfig.policyConfiguration.rules[]?'
         type: manual
         remediation: |
-           In OpenShift 4.6 and higher, if appropriate for your needs,
-
-
-          modify the audit policy.
+           In OpenShift 4.6 and higher, if appropriate for your needs, modify the audit policy.
         scored: false
