@@ -54,6 +54,21 @@ kubectl logs kube-bench-j76s9
 [INFO] 1.1 API Server
 ...
 ```
+
+### Auto-updating configuration (cfg/)
+
+Optionally update the `cfg/` bundle from the upstream repository before running checks.
+
+- Enable on run: `kube-bench --auto-update-config run`
+- Pin to a tag for reproducibility: `--update-ref vX.Y.Z` (recommended)
+- Resolve most recent release: `--update-ref latest`
+- Verify integrity: `--update-checksum <sha256-hex>`
+
+Environment variables (override flags):
+`KUBE_BENCH_AUTO_UPDATE_CONFIG`, `KUBE_BENCH_UPDATE_SOURCE`, `KUBE_BENCH_UPDATE_REF`, `KUBE_BENCH_UPDATE_CHECKSUM`. You can also provide `GITHUB_TOKEN` to avoid anonymous rate limits.
+
+See the detailed guide in [docs/running.md](docs/running.md#auto-updating-configuration-cfg).
+
 For more information and different ways to run kube-bench see [documentation](docs/running.md)
 ### Please Note
 

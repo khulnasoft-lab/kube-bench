@@ -3,6 +3,7 @@ Command | Description
 --- | ---
 help | Prints help about any command
 run | List of components to run 
+update | Update the cfg directory from the upstream source (supports flags/env)
 version | Print kube-bench version
 
 ## Flags
@@ -13,6 +14,10 @@ Flag | Description
 --benchmark | Manually specify CIS benchmark version 
 -c, --check | A comma-delimited list of checks to run as specified in Benchmark document.
 --config | config file (default is ./cfg/config.yaml)
+--auto-update-config | Automatically update the cfg/ directory from the upstream source before running (env: KUBE_BENCH_AUTO_UPDATE_CONFIG)
+--update-source | Source base URL to download cfg bundle (GitHub tarball API). Default: https://api.github.com/repos/khulnasoft-lab/kube-bench/tarball (env: KUBE_BENCH_UPDATE_SOURCE)
+--update-ref | Git ref to pull cfg bundle from (branch, tag, commit, or 'latest'). Default: main (env: KUBE_BENCH_UPDATE_REF)
+--update-checksum | Optional SHA256 checksum (hex) for the downloaded tarball (env: KUBE_BENCH_UPDATE_CHECKSUM)
 --exit-code | Specify the exit code for when checks fail
 --group | Run all the checks under this comma-delimited list of groups.
 --include-test-output | Prints the actual result when test fails.

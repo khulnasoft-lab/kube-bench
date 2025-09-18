@@ -1,4 +1,4 @@
-// Copyright © 2017 KhulnaSoft Security Software Ltd. <info@khulnasoft.com>
+// Copyright © 2017 KhulnaSoft Ltd. <info@khulnasoft.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -651,11 +651,18 @@ func Test_getPlatformBenchmarkVersion(t *testing.T) {
 		want string
 	}{
 		{
-			name: "eks",
+			name: "eks 1.31",
 			args: args{
-				platform: Platform{Name: "eks"},
+				platform: Platform{Name: "eks", Version: "1.31"},
 			},
-			want: "eks-1.2.0",
+			want: "eks-1.7.0",
+		},
+		{
+			name: "eks 1.24",
+			args: args{
+				platform: Platform{Name: "eks", Version: "1.24"},
+			},
+			want: "eks-1.5.0",
 		},
 		{
 			name: "gke 1.19",
@@ -705,6 +712,20 @@ func Test_getPlatformBenchmarkVersion(t *testing.T) {
 				platform: Platform{Name: "ocp", Version: "3.10"},
 			},
 			want: "rh-0.7",
+		},
+		{
+			name: "openshift4",
+			args: args{
+				platform: Platform{Name: "ocp", Version: "4.11"},
+			},
+			want: "rh-1.4",
+		},
+		{
+			name: "openshift4",
+			args: args{
+				platform: Platform{Name: "ocp", Version: "4.13"},
+			},
+			want: "rh-1.8",
 		},
 		{
 			name: "openshift4",

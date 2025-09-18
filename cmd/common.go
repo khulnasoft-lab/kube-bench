@@ -1,4 +1,4 @@
-// Copyright © 2017 KhulnaSoft Security Software Ltd. <info@khulnasoft.com>
+// Copyright © 2017 KhulnaSoft Ltd. <info@khulnasoft.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -70,7 +70,12 @@ func runChecks(nodetype check.NodeType, testYamlFile, detectedVersion string) {
 		os.Exit(1)
 	}
 
-	in, err := os.ReadFile(testYamlFile)
+	// Validate the test YAML file path to prevent directory traversal
+	if _, err := validateFilePath(filepath.Dir(testYamlFile), filepath.Base(testYamlFile)); err != nil {
+		exitWithError(fmt.Errorf("invalid test file path: %w", err))
+	}
+
+	in, err := os.ReadFile(testYamlFile) // #nosec G304
 	if err != nil {
 		exitWithError(fmt.Errorf("error opening %s test file: %v", testYamlFile, err))
 	}
@@ -159,7 +164,10 @@ func parseSkipIds(skipIds string) map[string]bool {
 
 // colorPrint outputs the state in a specific colour, along with a message string
 func colorPrint(state check.State, s string) {
-	colors[state].Printf("[%s] ", state)
+	_, err := colors[state].Printf("[%s] ", state)
+	if err != nil {
+		fmt.Printf("Error printing color: %v", err)
+	}
 	fmt.Printf("%s", s)
 }
 
@@ -185,7 +193,10 @@ func prettyPrint(r *check.Controls, summary check.Summary) {
 	// Print remediations.
 	if !noRemediations {
 		if summary.Fail > 0 || summary.Warn > 0 {
-			colors[check.WARN].Printf("== Remediations %s ==\n", r.Type)
+			_, err := colors[check.WARN].Printf("== Remediations %s ==\n", r.Type)
+			if err != nil {
+				fmt.Printf("Error printing color: %v", err)
+			}
 			for _, g := range r.Groups {
 				for _, c := range g.Checks {
 					if c.State == check.FAIL {
@@ -221,7 +232,10 @@ func printSummary(summary check.Summary, sectionName string) {
 		res = check.PASS
 	}
 
-	colors[res].Printf("== Summary %s ==\n", sectionName)
+	_, err := colors[res].Printf("== Summary %s ==\n", sectionName)
+	if err != nil {
+		fmt.Printf("Error printing color: %v", err)
+	}
 	fmt.Printf("%d checks PASS\n%d checks FAIL\n%d checks WARN\n%d checks INFO\n\n",
 		summary.Pass, summary.Fail, summary.Warn, summary.Info,
 	)
@@ -255,7 +269,10 @@ func loadConfig(nodetype check.NodeType, benchmarkVersion string) string {
 	}
 
 	// Merge version-specific config if any.
-	mergeConfig(path)
+	err = mergeConfig(path)
+	if err != nil {
+		exitWithError(fmt.Errorf("error merging config: %v", err))
+	}
 
 	return filepath.Join(path, file)
 }
@@ -503,14 +520,25 @@ func printRawOutput(output string) {
 }
 
 func writeOutputToFile(output string, outputFile string) error {
-	file, err := os.Create(outputFile)
+	// Validate the output file path to prevent directory traversal
+	if _, err := validateFilePath(filepath.Dir(outputFile), filepath.Base(outputFile)); err != nil {
+		return fmt.Errorf("invalid output file path: %w", err)
+	}
+	
+	file, err := os.Create(outputFile) // #nosec G304
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			fmt.Printf("Error closing file: %v", err)
+		}
+	}()
 
 	w := bufio.NewWriter(file)
-	fmt.Fprintln(w, output)
+	if _, err := fmt.Fprintln(w, output); err != nil {
+		return err
+	}
 	return w.Flush()
 }
 

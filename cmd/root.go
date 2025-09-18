@@ -1,4 +1,4 @@
-// Copyright © 2017 KhulnaSoft Security Software Ltd. <info@khulnasoft.com>
+// Copyright © 2017 KhulnaSoft Ltd. <info@khulnasoft.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,12 +15,15 @@
 package cmd
 
 import (
-	goflag "flag"
 	"fmt"
 	"os"
+	"strings"
+
+	goflag "flag"
 
 	"github.com/golang/glog"
 	"github.com/khulnasoft-lab/kube-bench/check"
+	"github.com/khulnasoft-lab/kube-bench/internal/updater"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -61,6 +64,11 @@ var (
 	outputFile           string
 	configFileError      error
 	controlsCollection   []*check.Controls
+	// Auto update config options
+	autoUpdateConfig bool
+	updateSource     string
+	updateRef        string
+	updateChecksum   string
 )
 
 // RootCmd represents the base command when called without any subcommands
@@ -69,6 +77,25 @@ var RootCmd = &cobra.Command{
 	Short: "Run CIS Benchmarks checks against a Kubernetes deployment",
 	Long:  `This tool runs the CIS Kubernetes Benchmark (https://www.cisecurity.org/benchmark/kubernetes/)`,
 	Run: func(cmd *cobra.Command, args []string) {
+		// Read possibly overridden values from Viper (env or flags)
+		autoUpdateConfig = viper.GetBool("auto-update-config")
+		updateSource = viper.GetString("update-source")
+		updateRef = viper.GetString("update-ref")
+		updateChecksum = viper.GetString("update-checksum")
+
+		// Optionally auto-update configuration before running checks
+		if autoUpdateConfig {
+			glog.V(1).Info("Auto-updating configuration bundle before running checks")
+			if err := updater.Update(cmd.Context(), updater.Options{
+				Source:        updateSource,
+				Ref:           updateRef,
+				TargetCfgDir:  cfgDir,
+				BackupEnabled: true,
+				Checksum:      updateChecksum,
+			}); err != nil {
+				glog.Warningf("config auto-update failed: %v", err)
+			}
+		}
 		bv, err := getBenchmarkVersion(kubeVersion, benchmarkVersion, getPlatformInfo(), viper.GetViper())
 		if err != nil {
 			exitWithError(fmt.Errorf("unable to determine benchmark version: %v", err))
@@ -143,7 +170,9 @@ var RootCmd = &cobra.Command{
 // Execute adds all child commands to the root command sets flags appropriately.
 // This is called by main.main(). It only needs to happen once to the rootCmd.
 func Execute() {
-	goflag.CommandLine.Parse([]string{})
+	if err := goflag.CommandLine.Parse([]string{}); err != nil {
+		fmt.Printf("Error parsing command line flags: %v", err)
+	}
 
 	if err := RootCmd.Execute(); err != nil {
 		fmt.Println(err)
@@ -173,6 +202,18 @@ func init() {
 	RootCmd.PersistentFlags().StringVar(&skipIds, "skip", "", "List of comma separated values of checks to be skipped")
 	RootCmd.PersistentFlags().BoolVar(&includeTestOutput, "include-test-output", false, "Prints the actual result when test fails")
 	RootCmd.PersistentFlags().StringVar(&outputFile, "outputfile", "", "Writes the results to output file when run with --json or --junit")
+
+	// Auto-update config flags
+	RootCmd.PersistentFlags().BoolVar(&autoUpdateConfig, "auto-update-config", false, "Automatically update the cfg/ directory from the upstream source before running")
+	RootCmd.PersistentFlags().StringVar(&updateSource, "update-source", "https://api.github.com/repos/khulnasoft-lab/kube-bench/tarball", "Source base URL to download cfg bundle (GitHub tarball API)")
+	RootCmd.PersistentFlags().StringVar(&updateRef, "update-ref", "main", "Git ref (branch, tag, commit, or 'latest') to pull cfg bundle from")
+	RootCmd.PersistentFlags().StringVar(&updateChecksum, "update-checksum", "", "Optional SHA256 checksum for the downloaded tarball for integrity verification")
+
+	// Bind flags to Viper keys so env vars can override (KUBE_BENCH_ prefix; '-' -> '_')
+	_ = viper.BindPFlag("auto-update-config", RootCmd.PersistentFlags().Lookup("auto-update-config"))
+	_ = viper.BindPFlag("update-source", RootCmd.PersistentFlags().Lookup("update-source"))
+	_ = viper.BindPFlag("update-ref", RootCmd.PersistentFlags().Lookup("update-ref"))
+	_ = viper.BindPFlag("update-checksum", RootCmd.PersistentFlags().Lookup("update-checksum"))
 
 	RootCmd.PersistentFlags().StringVarP(
 		&filterOpts.CheckList,
@@ -214,6 +255,8 @@ func initConfig() {
 	// Read flag values from environment variables.
 	// Precedence: Command line flags take precedence over environment variables.
 	viper.SetEnvPrefix(envVarsPrefix)
+	// Map dashes in flag names to underscores in env vars, e.g. KUBE_BENCH_UPDATE_REF
+	viper.SetEnvKeyReplacer(strings.NewReplacer("-", "_"))
 	viper.AutomaticEnv()
 
 	if kubeVersion == "" {
