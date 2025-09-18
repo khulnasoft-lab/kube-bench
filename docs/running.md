@@ -220,3 +220,32 @@ To run this you will need to specify `--benchmark rke2-cis-1.7` when you run the
 
 kube-bench includes benchmarks for Rancher K3S platform.
 To run this you will need to specify `--benchmark k3s-cis-1.7` when you run the `kube-bench` command.
+
+## Auto-updating configuration (cfg/)
+
+You can optionally update the configuration bundle in `cfg/` from the upstream repository before running checks.
+
+- Enable auto-update on run:
+  - `kube-bench --auto-update-config run`
+  - Pin to a specific release tag (recommended):
+    - `kube-bench --auto-update-config --update-ref vX.Y.Z run`
+  - Resolve the most recent GitHub release with a shorthand:
+    - `kube-bench --auto-update-config --update-ref latest run`
+  - Verify integrity with a checksum:
+    - `kube-bench --auto-update-config --update-ref vX.Y.Z --update-checksum <sha256-hex> run`
+
+- One-off update command:
+  - `kube-bench update --update-ref latest`
+  - `kube-bench update --update-ref vX.Y.Z --update-checksum <sha256-hex>`
+
+- Environment variables (override flags):
+  - `KUBE_BENCH_AUTO_UPDATE_CONFIG=true`
+  - `KUBE_BENCH_UPDATE_SOURCE=https://api.github.com/repos/khulnasoft-lab/kube-bench/tarball`
+  - `KUBE_BENCH_UPDATE_REF=main | vX.Y.Z | latest`
+  - `KUBE_BENCH_UPDATE_CHECKSUM=<sha256-hex>`
+  - Optional for rate limits: `GITHUB_TOKEN=<token>`
+
+Notes and best practices:
+- Pin to a tag (e.g., `vX.Y.Z`) for reproducibility. `main` is convenient but less deterministic.
+- Provide a checksum when possible to verify integrity.
+- Backups are created automatically as `cfg/.bak-YYYYMMDD-HHMMSS` when replacing `cfg/`.

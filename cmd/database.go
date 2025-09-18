@@ -110,7 +110,9 @@ func savePgsql(jsonInfo string) {
 		ScanInfo string    `gorm:"type:jsonb not null"`
 	}
 
-	db.Debug().AutoMigrate(&ScanResult{})
+	if err := db.Debug().AutoMigrate(&ScanResult{}); err != nil {
+		exitWithError(fmt.Errorf("failed to migrate database: %v", err))
+	}
 	db.Save(&ScanResult{ScanHost: hostname, ScanTime: timestamp, ScanInfo: jsonInfo})
 	glog.V(2).Info(fmt.Sprintf("successfully stored result to: %s", PsqlConnInfo.Host))
 }

@@ -1,4 +1,4 @@
-// Copyright © 2017-2019 KhulnaSoft Security Software Ltd. <info@khulnasoft.com>
+// Copyright © 2017-2019 KhulnaSoft Ltd. <info@khulnasoft.com>
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -243,10 +243,11 @@ func TestMapToCISVersion(t *testing.T) {
 		{kubeVersion: "1.25", succeed: true, exp: "cis-1.7"},
 		{kubeVersion: "1.26", succeed: true, exp: "cis-1.8"},
 		{kubeVersion: "1.27", succeed: true, exp: "cis-1.9"},
-		{kubeVersion: "1.28", succeed: true, exp: "cis-1.9"},
-		{kubeVersion: "1.29", succeed: true, exp: "cis-1.9"},
-		{kubeVersion: "1.30", succeed: true, exp: "cis-1.10"},
-		{kubeVersion: "1.31", succeed: true, exp: "cis-1.10"},
+		{kubeVersion: "1.28", succeed: true, exp: "cis-1.10"},
+		{kubeVersion: "1.29", succeed: true, exp: "cis-1.11"},
+		{kubeVersion: "1.30", succeed: true, exp: "cis-1.11"},
+		{kubeVersion: "1.31", succeed: true, exp: "cis-1.11"},
+		{kubeVersion: "1.32", succeed: true, exp: "cis-1.11"},
 		{kubeVersion: "gke-1.2.0", succeed: true, exp: "gke-1.2.0"},
 		{kubeVersion: "ocp-3.10", succeed: true, exp: "rh-0.7"},
 		{kubeVersion: "ocp-3.11", succeed: true, exp: "rh-0.7"},
@@ -448,8 +449,7 @@ func TestValidTargets(t *testing.T) {
 			name:      "aks-1.7 valid",
 			benchmark: "aks-1.7",
 			targets:   []string{"node", "policies", "controlplane", "managedservices"},
-
-			expected: true,
+			expected:  true,
 		},
 		{
 			name:      "eks-1.0.1 valid",
@@ -466,6 +466,18 @@ func TestValidTargets(t *testing.T) {
 		{
 			name:      "eks-1.2.0 valid",
 			benchmark: "eks-1.2.0",
+			targets:   []string{"node", "policies", "controlplane", "managedservices"},
+			expected:  true,
+		},
+		{
+			name:      "eks-1.5.0 valid",
+			benchmark: "eks-1.5.0",
+			targets:   []string{"node", "policies", "controlplane", "managedservices"},
+			expected:  true,
+		},
+		{
+			name:      "eks-1.7.0 valid",
+			benchmark: "eks-1.7.0",
 			targets:   []string{"node", "policies", "controlplane", "managedservices"},
 			expected:  true,
 		},
@@ -692,7 +704,9 @@ func TestPrintSummary(t *testing.T) {
 	r, w, _ := os.Pipe()
 	os.Stdout = w
 	printSummary(resultTotals, "totals")
-	w.Close()
+	if err := w.Close(); err != nil {
+		t.Errorf("Error closing writer: %v", err)
+	}
 	out, _ := io.ReadAll(r)
 	os.Stdout = rescueStdout
 
@@ -845,7 +859,9 @@ func fakeExecutableInPath(execFile, execCode string) (restoreFn, error) {
 	}
 
 	if len(execCode) > 0 {
-		os.WriteFile(filepath.Join(tmp, execFile), []byte(execCode), 0700)
+		if err := os.WriteFile(filepath.Join(tmp, execFile), []byte(execCode), 0700); err != nil {
+			return nil, err
+		}
 	} else {
 		f, err := os.OpenFile(execFile, os.O_CREATE|os.O_EXCL, 0700)
 		if err != nil {
@@ -863,9 +879,9 @@ func fakeExecutableInPath(execFile, execCode string) (restoreFn, error) {
 	}
 
 	restorePath := func() {
-		os.RemoveAll(tmp)
-		os.Chdir(wd)
-		os.Setenv("PATH", pathenv)
+		_ = os.RemoveAll(tmp)
+		_ = os.Chdir(wd)
+		_ = os.Setenv("PATH", pathenv)
 	}
 
 	return restorePath, nil
@@ -878,7 +894,7 @@ func prunePath() (restoreFn, error) {
 		return nil, err
 	}
 	restorePath := func() {
-		os.Setenv("PATH", pathenv)
+		_ = os.Setenv("PATH", pathenv)
 	}
 	return restorePath, nil
 }

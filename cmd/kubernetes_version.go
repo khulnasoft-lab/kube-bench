@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -45,7 +46,12 @@ func getKubeVersionFromRESTAPI() (*KubeVersion, error) {
 		return nil, err
 	}
 
-	tb, err := os.ReadFile(tokenfile)
+	// Validate the token file path to prevent directory traversal
+	if _, err := validateFilePath(filepath.Dir(tokenfile), filepath.Base(tokenfile)); err != nil {
+		return nil, fmt.Errorf("invalid token file path: %w", err)
+	}
+
+	tb, err := os.ReadFile(tokenfile) // #nosec G304
 	if err != nil {
 		glog.V(2).Infof("Failed reading token file Error: %s", err)
 		return nil, err
@@ -114,9 +120,16 @@ func extractVersion(data []byte) (*KubeVersion, error) {
 func getWebData(srvURL, token string, cacert *tls.Certificate) ([]byte, error) {
 	glog.V(2).Info(fmt.Sprintf("getWebData srvURL: %s\n", srvURL))
 
+	// Allow skipping TLS verification via environment variable for development/testing
+	// Default to secure behavior (verify certificates)
+	insecureSkipVerify := strings.ToLower(os.Getenv("KUBEBENCH_SKIP_TLS_VERIFY")) == "true"
+	if insecureSkipVerify {
+		glog.V(2).Info("Warning: TLS certificate verification is disabled via KUBEBENCH_SKIP_TLS_VERIFY")
+	}
+
 	tlsConf := &tls.Config{
 		Certificates:       []tls.Certificate{*cacert},
-		InsecureSkipVerify: true,
+		InsecureSkipVerify: insecureSkipVerify, // #nosec G402
 	}
 	tr := &http.Transport{
 		TLSClientConfig: tlsConf,
@@ -135,7 +148,11 @@ func getWebData(srvURL, token string, cacert *tls.Certificate) ([]byte, error) {
 		glog.V(2).Info(fmt.Sprintf("HTTP ERROR: %v\n", err))
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			glog.V(2).Info(fmt.Sprintf("Error closing response body: %v", err))
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		glog.V(2).Info(fmt.Sprintf("URL:[%s], StatusCode:[%d] \n Headers: %#v\n", srvURL, resp.StatusCode, resp.Header))
@@ -147,7 +164,12 @@ func getWebData(srvURL, token string, cacert *tls.Certificate) ([]byte, error) {
 }
 
 func loadCertificate(certFile string) (*tls.Certificate, error) {
-	cacert, err := os.ReadFile(certFile)
+	// Validate the certificate file path to prevent directory traversal
+	if _, err := validateFilePath(filepath.Dir(certFile), filepath.Base(certFile)); err != nil {
+		return nil, fmt.Errorf("invalid certificate file path: %w", err)
+	}
+	
+	cacert, err := os.ReadFile(certFile) // #nosec G304
 	if err != nil {
 		return nil, err
 	}

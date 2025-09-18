@@ -1,10 +1,13 @@
 ---
+version: "2"
 linters:
   disable-all: true
   enable:
     - gocyclo
-    - gofmt
-    - goimports
     - govet
     - misspell
-    - typecheck
+
+formatters:
+  enable:
+    - gofmt
+    - goimports

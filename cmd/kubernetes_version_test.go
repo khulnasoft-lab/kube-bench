@@ -15,7 +15,11 @@ func TestLoadCertificate(t *testing.T) {
 	if err != nil {
 		t.Fatalf("unable to create temp directory: %v", err)
 	}
-	defer os.RemoveAll(tmp)
+	defer func() {
+		if err := os.RemoveAll(tmp); err != nil {
+			t.Errorf("Error removing temp directory: %v", err)
+		}
+	}()
 
 	goodCertFile, _ := os.CreateTemp(tmp, "good-cert-*")
 	_, _ = goodCertFile.Write([]byte(`-----BEGIN CERTIFICATE-----
@@ -230,15 +234,27 @@ func TestExtractVersion(t *testing.T) {
 
 func TestGetKubernetesURL(t *testing.T) {
 	resetEnvs := func() {
-		os.Unsetenv("KUBE_BENCH_K8S_ENV")
-		os.Unsetenv("KUBERNETES_SERVICE_HOST")
-		os.Unsetenv("KUBERNETES_SERVICE_PORT_HTTPS")
+		if err := os.Unsetenv("KUBE_BENCH_K8S_ENV"); err != nil {
+			t.Errorf("Error unsetting KUBE_BENCH_K8S_ENV: %v", err)
+		}
+		if err := os.Unsetenv("KUBERNETES_SERVICE_HOST"); err != nil {
+			t.Errorf("Error unsetting KUBERNETES_SERVICE_HOST: %v", err)
+		}
+		if err := os.Unsetenv("KUBERNETES_SERVICE_PORT_HTTPS"); err != nil {
+			t.Errorf("Error unsetting KUBERNETES_SERVICE_PORT_HTTPS: %v", err)
+		}
 	}
 
 	setEnvs := func() {
-		os.Setenv("KUBE_BENCH_K8S_ENV", "1")
-		os.Setenv("KUBERNETES_SERVICE_HOST", "testHostServer")
-		os.Setenv("KUBERNETES_SERVICE_PORT_HTTPS", "443")
+		if err := os.Setenv("KUBE_BENCH_K8S_ENV", "1"); err != nil {
+			t.Errorf("Error setting KUBE_BENCH_K8S_ENV: %v", err)
+		}
+		if err := os.Setenv("KUBERNETES_SERVICE_HOST", "testHostServer"); err != nil {
+			t.Errorf("Error setting KUBERNETES_SERVICE_HOST: %v", err)
+		}
+		if err := os.Setenv("KUBERNETES_SERVICE_PORT_HTTPS", "443"); err != nil {
+			t.Errorf("Error setting KUBERNETES_SERVICE_PORT_HTTPS: %v", err)
+		}
 	}
 
 	cases := []struct {

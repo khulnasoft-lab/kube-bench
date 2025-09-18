@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/khulnasoft-lab/kube-bench/internal/findings"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/securityhub"
 	"github.com/aws/aws-sdk-go-v2/service/securityhub/types"
-	"github.com/khulnasoft-lab/kube-bench/internal/findings"
 	"github.com/spf13/viper"
 )
 
@@ -26,7 +26,7 @@ func writeFinding(in []types.AwsSecurityFinding) error {
 	}
 
 	svc := securityhub.NewFromConfig(cfg)
-	p := findings.New(*svc)
+	p := findings.New(svc)
 	out, perr := p.PublishFinding(in)
 	print(out)
 	return perr

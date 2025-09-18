@@ -11,10 +11,11 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/khulnasoft-lab/kube-bench/check"
 	"github.com/fatih/color"
 	"github.com/golang/glog"
-	"github.com/khulnasoft-lab/kube-bench/check"
 	"github.com/spf13/viper"
+	"golang.org/x/exp/slices"
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -520,10 +521,14 @@ func IsAKS(ctx context.Context, k8sClient kubernetes.Interface) (bool, error) {
 func getPlatformBenchmarkVersion(platform Platform) string {
 	glog.V(3).Infof("getPlatformBenchmarkVersion platform: %s", platform)
 	switch platform.Name {
+	case "eks":
+		oldEKSVersions := []string{"1.15", "1.16", "1.17", "1.18", "1.19", "1.20", "1.21", "1.22", "1.23", "1.24", "1.25", "1.26", "1.27", "1.28"}
+		if slices.Contains(oldEKSVersions, platform.Version) {
+			return "eks-1.5.0"
+		}
+		return "eks-1.7.0"
 	case "aks":
 		return "aks-1.7"
-	case "eks":
-		return "eks-1.2.0"
 	case "gke":
 		switch platform.Version {
 		case "1.15", "1.16", "1.17", "1.18", "1.19":
@@ -541,6 +546,10 @@ func getPlatformBenchmarkVersion(platform Platform) string {
 			return "rh-0.7"
 		case "4.1":
 			return "rh-1.0"
+		case "4.11":
+			return "rh-1.4"
+		case "4.13":
+			return "rh-1.8"
 		}
 	case "vmware":
 		return "tkgi-1.2.53"
@@ -561,6 +570,8 @@ func getPlatformBenchmarkVersion(platform Platform) string {
 			return "rke-cis-1.24"
 		case "1.25", "1.26", "1.27":
 			return "rke-cis-1.7"
+		default:
+			return "rke-cis-1.7"
 		}
 	case "rke2r":
 		switch platform.Version {
@@ -569,6 +580,8 @@ func getPlatformBenchmarkVersion(platform Platform) string {
 		case "1.24":
 			return "rke2-cis-1.24"
 		case "1.25", "1.26", "1.27":
+			return "rke2-cis-1.7"
+		default:
 			return "rke2-cis-1.7"
 		}
 	}
@@ -612,10 +625,10 @@ func getOpenShiftInfo() Platform {
 
 func getOcpValidVersion(ocpVer string) (string, error) {
 	ocpOriginal := ocpVer
-
+	valid := []string{"3.10", "4.1", "4.11", "4.13"}
 	for !isEmpty(ocpVer) {
 		glog.V(3).Info(fmt.Sprintf("getOcpBenchmarkVersion check for ocp: %q \n", ocpVer))
-		if ocpVer == "3.10" || ocpVer == "4.1" {
+		if slices.Contains(valid, ocpVer) {
 			glog.V(1).Info(fmt.Sprintf("getOcpBenchmarkVersion found valid version for ocp: %q \n", ocpVer))
 			return ocpVer, nil
 		}
